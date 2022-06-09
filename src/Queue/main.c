@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-#include "stack.h"
+#include "queue.h"
 
 #ifdef __unix__ 
 #elif defined(_WIN32) || defined(WIN32) 
@@ -14,8 +14,8 @@ void clearScreen();
 int getOption();
 
 void main() {
-  int stack[MAX_SIZE];
-  int top = -1;
+  int queue[MAX_SIZE];
+  int tail = -1;
   
   int dequeued;
   int value;
@@ -25,22 +25,22 @@ void main() {
     option = getOption();
     switch(option) {
       case 1:
-        //stackIn
+        //Enqueue
         printf("Value to enqueue: ");
         scanf("%d", &value);
-        if(!stackIn(stack, value, &top, MAX_SIZE)) getch();
+        if(!enqueue(queue, value, &tail, MAX_SIZE)) getch();
         break;
       case 2:
-        //stackOut
-        dequeued = stackOut(stack, &top);
+        //Dequeue
+        dequeued = dequeue(queue, &tail);
         if(dequeued) {
-          printf("Dequeued value %d from the stack", dequeued);
+          printf("Dequeued value %d from the queue", dequeued);
         }
         getch();
         break;
       case 3:
-        //printStack
-        printStack(stack, top);
+        //printQueue
+        printQueue(queue, tail);
         getch();
         break;
       case 0:
@@ -63,7 +63,7 @@ void clearScreen() {
 
 int getOption() {
   int tmp;
-  printf("1) Stack In\n2) Stack Out\n3) Print Stack\n0) Exit\n\n>> ");
+  printf("1) Enqueue\n2) Dequeue\n3) Print Queue\n0) Exit\n\n>> ");
   scanf("%d", &tmp);
   return tmp;
 }

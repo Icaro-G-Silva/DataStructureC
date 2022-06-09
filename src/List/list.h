@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define FIRST_INDEX 1
+
 typedef struct {
   int index;
   int value;
@@ -19,7 +21,7 @@ void add(Node **head, int value) {
   if(*head == NULL) {
     //CREATES HEAD
     *head = (Node *) malloc(sizeof(Node));
-    (*head)->index = 0;
+    (*head)->index = FIRST_INDEX;
     (*head)->value = value;
     (*head)->next = NULL;
   }
@@ -44,7 +46,7 @@ void rearrangeIndexes(Node **head) {
   }
 
   Node *lastNode, *node = *head, *nextNode;
-  int index = 0;
+  int index = FIRST_INDEX;
 
   do {
     node->index = index++;
@@ -55,8 +57,8 @@ void rearrangeIndexes(Node **head) {
 }
 
 int delete(Node **head, int index) {
-  if(index < 0) {
-    fprintf(stderr, "Index cannot be negative!\n");
+  if(index <= 0) {
+    fprintf(stderr, "Index cannot be negative or zero!\n");
     return 0;
   }
   if(*head == NULL) {
@@ -77,13 +79,13 @@ int delete(Node **head, int index) {
   }
   nextNode = node->next;
 
-  if(nextNode != NULL && index == 0) {
+  if(nextNode != NULL && index == FIRST_INDEX) {
     *head = nextNode;
   }
-  if(nextNode != NULL && index != 0) {
+  if(nextNode != NULL && index != FIRST_INDEX) {
     lastNode->next = nextNode;
   }
-  if(nextNode == NULL && index != 0) {
+  if(nextNode == NULL && index != FIRST_INDEX) {
     lastNode->next = NULL;
   }
 
